@@ -1,0 +1,485 @@
+/* ==========================================================================
+   LAYOUT.CSS
+   Estructura general de página: navbar sticky, hero de dos columnas,
+   barra de stats, strip de logos, grid system y footer.
+   Se apoya en variables.css y base.css.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   NAVBAR
+   Sticky, transparente sobre el hero, sólido con sombra al hacer scroll.
+   -------------------------------------------------------------------------- */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-navbar);
+  background-color: var(--color-primary);
+  transition: box-shadow var(--transition-base),
+              background-color var(--transition-base);
+}
+
+.navbar.is-scrolled {
+  z-index: var(--z-navbar-scroll);
+  box-shadow: var(--shadow-md);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+  gap: var(--space-lg);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.navbar-logo {
+  height: 36px;
+  width: auto;
+}
+
+.navbar-brand-name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-inverse);
+  white-space: nowrap;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  list-style: none;
+}
+
+.navbar-links a {
+  color: var(--color-text-inverse);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  opacity: 0.9;
+}
+
+.navbar-links a:hover {
+  opacity: 1;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-shrink: 0;
+}
+
+.navbar-toggle {
+  display: none;
+  color: var(--color-text-inverse);
+  font-size: var(--fs-2xl);
+}
+
+@media (max-width: 992px) {
+  .navbar-links {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    background-color: var(--color-primary-dark);
+    padding: var(--space-2xl) var(--container-padding);
+    transform: translateX(100%);
+    transition: transform var(--transition-base);
+    overflow-y: auto;
+  }
+
+  .navbar-links.is-open {
+    transform: translateX(0);
+  }
+
+  .navbar-toggle {
+    display: block;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   HERO — dos columnas: texto + CTA / imagen con badges flotantes
+   -------------------------------------------------------------------------- */
+
+.hero {
+  background-color: var(--color-primary);
+  padding-block: var(--space-4xl);
+  overflow: hidden;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-3xl);
+}
+
+.hero-content {
+  color: var(--color-text-inverse);
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--color-text-inverse);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  padding: var(--space-2xs) var(--space-md);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-md);
+}
+
+.hero-title {
+  color: var(--color-text-inverse);
+  margin-bottom: var(--space-md);
+}
+
+.hero-subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--fs-md);
+  margin-bottom: var(--space-xl);
+  max-width: 480px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.hero-media {
+  position: relative;
+}
+
+.hero-media img {
+  border-radius: var(--radius-lg);
+  width: 100%;
+}
+
+.hero-floating-badge {
+  position: absolute;
+  background-color: var(--color-white);
+  color: var(--color-text-primary);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--fs-sm);
+}
+
+.hero-floating-badge strong {
+  display: block;
+  font-size: var(--fs-lg);
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.hero-floating-badge span {
+  color: var(--color-text-secondary);
+  font-size: var(--fs-xs);
+}
+
+.hero-floating-badge--top {
+  top: -16px;
+  left: -16px;
+}
+
+.hero-floating-badge--bottom {
+  bottom: -16px;
+  right: -16px;
+}
+
+@media (max-width: 992px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    margin-inline: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-floating-badge {
+    display: none;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   BARRA DE STATS — debajo del hero
+   -------------------------------------------------------------------------- */
+
+.stats-bar {
+  background-color: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.stats-bar-inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  padding-block: var(--space-xl);
+  text-align: center;
+}
+
+.stat-item strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: var(--fs-3xl);
+  color: var(--color-primary);
+  line-height: var(--lh-tight);
+}
+
+.stat-item span {
+  font-size: var(--fs-sm);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 768px) {
+  .stats-bar-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   STRIP DE LOGOS — empresas / certificaciones
+   -------------------------------------------------------------------------- */
+
+.logos-strip {
+  padding-block: var(--space-2xl);
+}
+
+.logos-strip-label {
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+.logos-strip-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-3xl);
+}
+
+.logos-strip-grid img {
+  height: 32px;
+  width: auto;
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: filter var(--transition-base), opacity var(--transition-base);
+}
+
+.logos-strip-grid img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+
+/* --------------------------------------------------------------------------
+   GRID SYSTEM GENÉRICO — usado en features, cursos, testimonios, etc.
+   -------------------------------------------------------------------------- */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+}
+
+.grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-md);
+}
+
+@media (max-width: 992px) {
+  .grid-3, .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-6 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-6 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   CTA BANNER — barra final de ancho completo antes del footer
+   -------------------------------------------------------------------------- */
+
+.cta-banner {
+  background-color: var(--color-primary-dark);
+  padding-block: var(--space-3xl);
+  text-align: center;
+  color: var(--color-text-inverse);
+}
+
+.cta-banner h2,
+.cta-banner p {
+  color: var(--color-text-inverse);
+}
+
+.cta-banner p {
+  opacity: 0.85;
+  margin-bottom: var(--space-xl);
+}
+
+
+/* --------------------------------------------------------------------------
+   FOOTER
+   -------------------------------------------------------------------------- */
+
+.footer {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-inverse);
+  padding-top: var(--space-3xl);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand p {
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: var(--space-md);
+  max-width: 320px;
+}
+
+.footer-col-title {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: var(--space-md);
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  list-style: none;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: var(--fs-sm);
+}
+
+.footer-links a:hover {
+  color: var(--color-text-inverse);
+}
+
+.footer-social {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.footer-social a {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-inverse);
+  transition: background-color var(--transition-fast);
+}
+
+.footer-social a:hover {
+  background-color: var(--color-primary);
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-lg);
+  font-size: var(--fs-xs);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: var(--space-lg);
+  list-style: none;
+}
+
+.footer-bottom-links a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-bottom-links a:hover {
+  color: var(--color-text-inverse);
+}
+
+@media (max-width: 992px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: var(--space-md);
+    text-align: center;
+  }
+}
