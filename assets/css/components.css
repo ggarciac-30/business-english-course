@@ -1,0 +1,553 @@
+/* ==========================================================================
+   COMPONENTS.CSS
+   Componentes especializados: cards de cursos, niveles CEFR, testimonios,
+   profesores, pricing, acordeón FAQ, formulario de contacto.
+   Se apoya en variables.css, base.css y layout.css.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CARD BASE
+   -------------------------------------------------------------------------- */
+
+.card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  transition: transform var(--transition-base),
+              box-shadow var(--transition-base),
+              border-color var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+
+/* --------------------------------------------------------------------------
+   FEATURE CARD — sección Beneficios
+   -------------------------------------------------------------------------- */
+
+.feature-card {
+  text-align: left;
+}
+
+.feature-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-alt);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xl);
+  margin-bottom: var(--space-md);
+}
+
+.feature-card h4 {
+  margin-bottom: var(--space-xs);
+}
+
+
+/* --------------------------------------------------------------------------
+   COURSE CARD — sección Cursos
+   -------------------------------------------------------------------------- */
+
+.course-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.course-card-image {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.course-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.course-card:hover .course-card-image img {
+  transform: scale(1.05);
+}
+
+.course-card-badges {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.course-card-body {
+  padding: var(--space-lg);
+}
+
+.course-card-body h4 {
+  margin-bottom: var(--space-xs);
+}
+
+.course-card-body p {
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-md);
+}
+
+.course-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--fs-sm);
+  color: var(--color-text-secondary);
+}
+
+.course-card-meta a {
+  color: var(--color-primary);
+  font-weight: var(--fw-semibold);
+}
+
+
+/* --------------------------------------------------------------------------
+   CEFR LEVEL CARD — sección Niveles (versión ampliada/detallada)
+   Complementa los badges de base.css con una tarjeta más completa,
+   estilo "speech bubble" tomando referencia del logo.
+   -------------------------------------------------------------------------- */
+
+.cefr-card {
+  position: relative;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border-left: 6px solid transparent;
+  padding: var(--space-lg);
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+.cefr-card-level {
+  font-family: var(--font-heading);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  line-height: 1;
+  margin-bottom: var(--space-xs);
+}
+
+.cefr-card-name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  opacity: 0.85;
+  margin-bottom: var(--space-sm);
+}
+
+.cefr-card-desc {
+  font-size: var(--fs-xs);
+  opacity: 0.75;
+  line-height: var(--lh-normal);
+}
+
+.cefr-card--a1 { background-color: var(--color-cefr-a1); border-left-color: var(--color-cefr-a1-dark); }
+.cefr-card--a2 { background-color: var(--color-cefr-a2); border-left-color: var(--color-cefr-a2-dark); }
+.cefr-card--b1 { background-color: var(--color-cefr-b1); border-left-color: var(--color-cefr-b1-dark); }
+.cefr-card--c2 { background-color: var(--color-cefr-c2); border-left-color: var(--color-cefr-c2-dark); }
+
+.cefr-card--b2,
+.cefr-card--c1 {
+  color: var(--color-gray-900);
+}
+
+.cefr-card--b2 { background-color: var(--color-cefr-b2); border-left-color: var(--color-cefr-b2-dark); }
+.cefr-card--c1 { background-color: var(--color-cefr-c1); border-left-color: var(--color-cefr-c1-dark); }
+
+
+/* --------------------------------------------------------------------------
+   TEACHER CARD — sección Profesores
+   -------------------------------------------------------------------------- */
+
+.teacher-card {
+  text-align: center;
+}
+
+.teacher-photo {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-inline: auto;
+  margin-bottom: var(--space-md);
+}
+
+.teacher-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.teacher-name {
+  margin-bottom: var(--space-2xs);
+}
+
+.teacher-role {
+  font-size: var(--fs-sm);
+  color: var(--color-primary);
+  font-weight: var(--fw-medium);
+  margin-bottom: var(--space-sm);
+}
+
+.teacher-bio {
+  font-size: var(--fs-sm);
+}
+
+
+/* --------------------------------------------------------------------------
+   TESTIMONIAL CARD
+   -------------------------------------------------------------------------- */
+
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.testimonial-quote {
+  font-size: var(--fs-md);
+  color: var(--color-text-primary);
+  line-height: var(--lh-relaxed);
+  position: relative;
+}
+
+.testimonial-stars {
+  color: var(--color-secondary-dark);
+  font-size: var(--fs-sm);
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: auto;
+}
+
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.testimonial-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.testimonial-author-name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-primary);
+}
+
+.testimonial-author-role {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+
+/* --------------------------------------------------------------------------
+   COMPANY CARD — sección Empresas
+   -------------------------------------------------------------------------- */
+
+.company-card {
+  text-align: center;
+}
+
+.company-card img {
+  height: 40px;
+  width: auto;
+  margin-inline: auto;
+  margin-bottom: var(--space-md);
+  filter: grayscale(100%);
+}
+
+.company-card blockquote {
+  font-size: var(--fs-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+
+/* --------------------------------------------------------------------------
+   PRICING CARD
+   -------------------------------------------------------------------------- */
+
+.pricing-card {
+  text-align: center;
+  position: relative;
+}
+
+.pricing-card--featured {
+  border: 2px solid var(--color-primary);
+  transform: scale(1.03);
+}
+
+.pricing-card-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pricing-card-name {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  margin-bottom: var(--space-sm);
+}
+
+.pricing-card-price {
+  font-family: var(--font-heading);
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--space-2xs);
+}
+
+.pricing-card-price span {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  color: var(--color-text-secondary);
+}
+
+.pricing-card-period {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+.pricing-card-features {
+  list-style: none;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.pricing-card-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--fs-sm);
+  color: var(--color-text-secondary);
+}
+
+.pricing-card-features li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-success);
+}
+
+
+/* --------------------------------------------------------------------------
+   FAQ ACCORDION
+   -------------------------------------------------------------------------- */
+
+.faq-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-block: var(--space-lg);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-primary);
+  text-align: left;
+}
+
+.faq-question-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  transition: transform var(--transition-base);
+}
+
+.faq-item.is-open .faq-question-icon {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height var(--transition-base) ease;
+}
+
+.faq-answer-inner {
+  padding-bottom: var(--space-lg);
+  color: var(--color-text-secondary);
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+}
+
+.faq-item.is-open .faq-answer {
+  max-height: 500px;
+}
+
+
+/* --------------------------------------------------------------------------
+   FORMULARIO DE CONTACTO
+   -------------------------------------------------------------------------- */
+
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+
+.form-label {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.form-control {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-white);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(12, 100, 163, 0.15);
+}
+
+.form-control::placeholder {
+  color: var(--color-text-muted);
+}
+
+textarea.form-control {
+  min-height: 140px;
+}
+
+.form-error {
+  font-size: var(--fs-xs);
+  color: var(--color-error);
+  margin-top: var(--space-2xs);
+  display: none;
+}
+
+.form-group.has-error .form-control {
+  border-color: var(--color-error);
+}
+
+.form-group.has-error .form-error {
+  display: block;
+}
+
+.form-success {
+  background-color: rgba(46, 158, 91, 0.1);
+  color: var(--color-success);
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  display: none;
+}
+
+.form-success.is-visible {
+  display: block;
+}
+
+
+/* --------------------------------------------------------------------------
+   WHATSAPP FLOTANTE
+   -------------------------------------------------------------------------- */
+
+.whatsapp-float {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  z-index: var(--z-whatsapp);
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-whatsapp);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xl);
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.08);
+  background-color: var(--color-whatsapp-dark);
+}
+
+
+/* --------------------------------------------------------------------------
+   BOTÓN REGRESAR ARRIBA
+   -------------------------------------------------------------------------- */
+
+.scroll-top-btn {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: calc(var(--space-lg) + 68px);
+  z-index: var(--z-scroll-top);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-lg);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity var(--transition-base),
+              visibility var(--transition-base),
+              transform var(--transition-base);
+}
+
+.scroll-top-btn.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 576px) {
+  .scroll-top-btn {
+    right: var(--space-lg);
+    bottom: calc(var(--space-lg) + 64px);
+  }
+}
