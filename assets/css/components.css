@@ -76,6 +76,8 @@
   transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
   border-color: var(--color-curso); /* Aplica dinámicamente el color asignado en el HTML */
+   /* NUEVO: Rellena el fondo con el color del curso y un 5% de opacidad (suave) */
+  background-color: color-mix(in srgb, var(--color-curso) 5%, var(--color-white));
 }
 
 /* Accesibilidad: También cambia a azul si el usuario navega con el teclado (Tab) */
@@ -83,6 +85,7 @@
   transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
   border-color: var(--color-curso);
+  background-color: color-mix(in srgb, var(--color-curso) 5%, var(--color-white));
   outline: none; /* Limpia el anillo por defecto para usar el borde azul estilizado */
 }
 
