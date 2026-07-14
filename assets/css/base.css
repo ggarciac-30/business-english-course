@@ -356,3 +356,36 @@ select:focus-visible {
 .skip-link:focus {
   top: var(--space-md);
 }
+
+/* --------------------------------------------------------------------------
+   TARJETAS DE CURSOS DINÁMICAS (CLICABLES)
+   -------------------------------------------------------------------------- */
+
+.clicked-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none !important;
+  color: var(--color-text-primary) !important;
+  cursor: pointer;
+  background-color: var(--color-bg-body);
+  transition: transform var(--transition-fast) ease, 
+              box-shadow var(--transition-fast) ease, 
+              border-color var(--transition-fast) ease;
+}
+
+/* Efecto al posicionar el cursor sobre el cuadro */
+.clicked-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Mantiene los títulos estables y sin el subrayado por defecto de los enlaces */
+.clicked-card h4 {
+  text-decoration: none;
+  color: var(--color-text-primary);
+}
+
+/* Evita que los textos descriptivos cambien de color por ser un enlace */
+.clicked-card p {
+  color: var(--color-text-secondary);
+}
