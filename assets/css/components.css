@@ -56,11 +56,26 @@
    COURSE CARD — sección Cursos
    -------------------------------------------------------------------------- */
 
+/* --------------------------------------------------------------------------
+   COURSE CARD — sección Cursos
+   -------------------------------------------------------------------------- */
+
 .course-card {
   display: flex;
   flex-direction: column;
   padding: 0;
   overflow: hidden;
+  /* Nuevos estilos para que actúe como botón gigante y limpie el estilo de enlace */
+  text-decoration: none !important;
+  color: var(--color-text-primary) !important;
+  cursor: pointer;
+}
+
+/* Efecto al pasar el cursor sobre cualquier parte del cuadro */
+.course-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
 }
 
 .course-card-image {
@@ -94,11 +109,15 @@
 
 .course-card-body h4 {
   margin-bottom: var(--space-xs);
+  /* Asegura que el título no intente subrayarse */
+  text-decoration: none; 
 }
 
 .course-card-body p {
   font-size: var(--fs-sm);
   margin-bottom: var(--space-md);
+  /* Mantiene el color secundario original de los textos de tu diseño */
+  color: var(--color-text-secondary); 
 }
 
 .course-card-meta {
@@ -109,13 +128,8 @@
   border-top: 1px solid var(--color-border);
   font-size: var(--fs-sm);
   color: var(--color-text-secondary);
+  margin-top: auto; /* Empuja el tiempo de duración al fondo para que queden alineados */
 }
-
-.course-card-meta a {
-  color: var(--color-primary);
-  font-weight: var(--fw-semibold);
-}
-
 
 /* --------------------------------------------------------------------------
    CEFR LEVEL CARD — sección Niveles (versión ampliada/detallada)
