@@ -82,3 +82,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// Espera a que la página cargue y ajusta el menú en los 20 HTML automáticamente
+document.addEventListener("DOMContentLoaded", () => {
+  const navbar = document.querySelector('.navbar');
+  const navbarInner = document.querySelector('.navbar-inner');
+  const navbarLogo = document.querySelector('.navbar-logo');
+
+  if (navbar) {
+    navbar.style.setProperty('padding-block', '20px', 'important');
+  }
+  if (navbarInner) {
+    navbarInner.style.setProperty('display', 'flex', 'important');
+    navbarInner.style.setProperty('align-items', 'center', 'important');
+  }
+  if (navbarLogo) {
+    navbarLogo.style.setProperty('height', 'auto', 'important');
+    navbarLogo.style.setProperty('max-height', 'none', 'important');
+    navbarLogo.style.setProperty('width', 'auto', 'important');
+  }
+});
