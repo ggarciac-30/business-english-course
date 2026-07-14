@@ -75,7 +75,15 @@
 .course-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
-  border-color: transparent;
+  border-color: var(--color-primary); /* Cambia el contorno a tu azul principal */
+}
+
+/* Accesibilidad: También cambia a azul si el usuario navega con el teclado (Tab) */
+.course-card:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+  outline: none; /* Limpia el anillo por defecto para usar el borde azul estilizado */
 }
 
 .course-card-image {
