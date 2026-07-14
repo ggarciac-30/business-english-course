@@ -30,7 +30,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--header-height);
+  /* CAMBIO: Quitamos el alto fijo y dejamos que respete el tamaño del logo */
+  height: auto; 
+  padding-block: 15px; /* Crea un colchón limpio de espacio arriba y abajo del logo */
   gap: var(--space-lg);
 }
 
@@ -42,8 +44,10 @@
 }
 
 .navbar-logo {
-  height: 36px;
+  /* CAMBIO: Le permitimos usar su escala original sin forzar 36px */
+  height: auto;
   width: auto;
+  max-height: 80px; /* Un límite seguro por si la imagen original es excesivamente masiva */
 }
 
 .navbar-brand-name {
