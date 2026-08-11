@@ -229,8 +229,13 @@
            1. Sube el video a YouTube como Short.
            2. Copia el link, ejemplo: https://www.youtube.com/shorts/AbCdEfGhIjK
            3. El ID es la parte final del link: AbCdEfGhIjK
-           4. Reemplaza "PEGA_AQUI_EL_ID_DE_YOUTUBE" en el src del iframe
-              correspondiente por ese ID (dentro de cada .reel-card).
+           4. En el src del iframe correspondiente (dentro de cada .reel-card),
+              pega el ID en este formato exacto:
+              src="https://www.youtube.com/embed/AbCdEfGhIjK"
+              IMPORTANTE: debe ser /embed/ID, NO el link normal de
+              youtube.com/shorts/ID — YouTube bloquea ese formato dentro
+              de un iframe (por eso se ve "la pagina ha rechazado la
+              conexion" si se pega el link tal cual).
            5. Cambia el nombre y el curso/rol en .reel-name / .reel-role.
 
          La tercera tarjeta (.reel-card--soon) es un espacio reservado para
@@ -248,7 +253,7 @@
         <div class="reel-grid" data-stagger>
           <div class="reel-card">
             <iframe 
-              src="https://youtube.com/shorts/OXmZzbAnxUI"
+              src="https://www.youtube.com/embed/OXmZzbAnxUI"
               title="Video testimonio de alumno de Business English Course"
               loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -262,7 +267,7 @@
 
           <div class="reel-card">
             <iframe
-              src="https://youtube.com/shorts/VPNHOxogIjk"
+              src="https://www.youtube.com/embed/VPNHOxogIjk"
               title="Video testimonio de alumna de Business English Course"
               loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
