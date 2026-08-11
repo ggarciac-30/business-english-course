@@ -287,6 +287,90 @@
 
 
 /* --------------------------------------------------------------------------
+   REEL CARD — testimonios en video vertical (YouTube Shorts embebido)
+   -------------------------------------------------------------------------- */
+
+.reel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-lg);
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.reel-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-gray-900);
+  box-shadow: var(--shadow-md);
+}
+
+.reel-card iframe {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  display: block;
+  border: 0;
+}
+
+.reel-caption {
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-white);
+}
+
+.reel-name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.reel-role {
+  font-size: var(--fs-xs);
+  opacity: 0.8;
+}
+
+/* Tarjeta "Próximamente" — mismo tamaño que una tarjeta con video,
+   para usarse mientras un testimonio todavía no está listo. */
+.reel-card--soon {
+  background-color: var(--color-bg-alt);
+}
+
+.reel-card--soon .reel-placeholder {
+  aspect-ratio: 9 / 16;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  text-align: center;
+  padding: var(--space-lg);
+  color: var(--color-text-muted);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.reel-card--soon .reel-placeholder i {
+  font-size: var(--fs-2xl);
+}
+
+.reel-card--soon .reel-caption {
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 992px) {
+  .reel-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 620px;
+  }
+}
+
+@media (max-width: 576px) {
+  .reel-grid {
+    grid-template-columns: 1fr;
+    max-width: 340px;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
    COMPANY CARD — sección Empresas
    -------------------------------------------------------------------------- */
 
