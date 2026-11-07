@@ -147,9 +147,9 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="phone">Teléfono (opcional)</label>
-            <input class="form-control" type="tel" id="phone" name="phone" placeholder="55 1234 5678">
-            <span class="form-error"></span>
+            <label class="form-label" for="phone">Teléfono (10 dígitos)</label>
+            <input class="form-control" type="tel" id="phone" name="phone" placeholder="Ej. 55 2972 8886" inputmode="tel" autocomplete="tel-national" maxlength="20" required aria-describedby="phone-error">
+            <span class="form-error" id="phone-error" aria-live="polite"></span>
           </div>
 
           <div class="form-group">

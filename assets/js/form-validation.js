@@ -19,18 +19,15 @@ function initFormValidation() {
   /* ------------------------------------------------------------------------
      Reglas de validación por campo
      ------------------------------------------------------------------------ */
+  /* Cada validador regresa '' si el valor es válido, o el mensaje de error */
   const validators = {
-    name: (value) => value.trim().length >= 2,
-    email: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()),
-    phone: (value) => value.trim() === '' || /^[\d\s()+-]{7,}$/.test(value.trim()),
-    message: (value) => value.trim().length >= 10,
-  };
-
-  const errorMessages = {
-    name: 'Escribe tu nombre completo (minimo 2 caracteres).',
-    email: 'Ingresa un correo electronico valido.',
-    phone: 'Ingresa un numero de telefono valido.',
-    message: 'Cuentanos un poco mas (minimo 10 caracteres).',
+    name: (value) =>
+      value.trim().length >= 2 ? '' : 'Escribe tu nombre completo (mínimo 2 caracteres).',
+    email: (value) =>
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()) ? '' : 'Ingresa un correo electrónico válido.',
+    phone: (value) => validateMexicanPhone(value).error,
+    message: (value) =>
+      value.trim().length >= 10 ? '' : 'Cuéntanos un poco más (mínimo 10 caracteres).',
   };
 
   /* ------------------------------------------------------------------------
@@ -42,8 +39,11 @@ function initFormValidation() {
 
     if (!validator) return true;
 
-    const isValid = validator(field.value);
+    const errorText = validator(field.value);
+    const isValid = errorText === '';
     const group = field.closest('.form-group');
+
+    field.setAttribute('aria-invalid', String(!isValid));
 
     if (!group) return isValid;
 
@@ -51,9 +51,10 @@ function initFormValidation() {
 
     if (isValid) {
       group.classList.remove('has-error');
+      if (errorEl) errorEl.textContent = '';
     } else {
       group.classList.add('has-error');
-      if (errorEl) errorEl.textContent = errorMessages[name];
+      if (errorEl) errorEl.textContent = errorText;
     }
 
     return isValid;
@@ -90,6 +91,13 @@ function initFormValidation() {
       const firstError = form.querySelector('.form-group.has-error input, .form-group.has-error textarea');
       if (firstError) firstError.focus();
       return;
+    }
+
+    /* Envía el teléfono normalizado a 10 dígitos (ej. 5529728886) */
+    const phoneField = form.querySelector('[name="phone"]');
+    if (phoneField) {
+      const { digits } = validateMexicanPhone(phoneField.value);
+      if (digits) phoneField.value = digits;
     }
 
     const endpoint = form.getAttribute('data-form-endpoint');
@@ -145,4 +153,68 @@ function initFormValidation() {
   }
 }
 
+/* ==========================================================================
+   VALIDACIÓN DE TELÉFONO MEXICANO
+   Plan de numeración del IFT: 10 dígitos (clave de larga distancia + número).
+   Ninguna clave inicia con 0 ni con 1. Acepta espacios, guiones, paréntesis
+   y el prefijo internacional +52 (también el antiguo 044/045/1 de celular).
+   Regresa { error, digits }: error = '' si es válido; digits = 10 dígitos.
+   ========================================================================== */
+function validateMexicanPhone(raw) {
+  const value = String(raw || '').trim();
+
+  if (value === '') {
+    return { error: 'El teléfono es obligatorio para poder contactarte.', digits: '' };
+  }
+
+  if (/[^\d\s().+-]/.test(value)) {
+    return { error: 'Usa solo números (puedes separarlos con espacios o guiones).', digits: '' };
+  }
+
+  let digits = value.replace(/\D/g, '');
+
+  /* Prefijos que no forman parte de los 10 dígitos */
+  if (digits.length === 13 && digits.startsWith('521')) digits = digits.slice(3);
+  else if (digits.length === 12 && digits.startsWith('52')) digits = digits.slice(2);
+  else if (digits.length === 13 && /^04[45]/.test(digits)) digits = digits.slice(3);
+  else if (digits.length === 11 && digits.startsWith('1')) digits = digits.slice(1);
+
+  if (digits.length < 10) {
+    const missing = 10 - digits.length;
+    return {
+      error: `El teléfono debe tener 10 dígitos (te ${missing === 1 ? 'falta 1' : `faltan ${missing}`}).`,
+      digits: '',
+    };
+  }
+
+  if (digits.length > 10) {
+    return { error: 'El teléfono debe tener 10 dígitos, incluida la clave de larga distancia.', digits: '' };
+  }
+
+  if (/^[01]/.test(digits)) {
+    return { error: 'En México ningún número de 10 dígitos empieza con 0 ni con 1.', digits: '' };
+  }
+
+  const invalid = { error: 'Ese número no parece válido. Revisa que esté completo y bien escrito.', digits: '' };
+
+  /* Todos los dígitos iguales (5555555555) */
+  if (/^(\d)\1{9}$/.test(digits)) return invalid;
+
+  /* Seis o más dígitos iguales seguidos (5500000012, 5511111189) */
+  if (/(\d)\1{5,}/.test(digits)) return invalid;
+
+  /* Demasiados ceros en total */
+  if ((digits.match(/0/g) || []).length >= 7) return invalid;
+
+  /* Secuencias ascendentes o descendentes (2345678901, 9876543210) */
+  const steps = [...digits].slice(1).map((d, i) => (Number(d) - Number(digits[i]) + 10) % 10);
+  if (steps.every((s) => s === 1) || steps.every((s) => s === 9)) return invalid;
+
+  /* Números de ejemplo comunes */
+  if (['5512345678', '5523456789', '5500000000'].includes(digits)) return invalid;
+
+  return { error: '', digits };
+}
+
 window.initFormValidation = initFormValidation;
+window.validateMexicanPhone = validateMexicanPhone;
