@@ -1,196 +1,86 @@
 /* ==========================================================================
-   RESPONSIVE.CSS
-   Ajustes finos de breakpoints globales que no viven ya en cada archivo
-   individual (variables.css define los valores base; layout.css y
-   components.css ya resuelven sus propios breakpoints puntuales).
-   Aquí solo va lo transversal: spacing, contenedores, secciones, tipografía.
-
-   Breakpoints usados en todo el proyecto:
-   - 1200px  → escritorio grande / laptop
-   - 992px   → tablet horizontal / laptop pequeño
-   - 768px   → tablet vertical
-   - 576px   → móvil grande
-   - 375px   → móvil pequeño (ajustes mínimos)
+   NAVBAR.JS
+   Controla la barra de navegación:
+   - Menú móvil (botón hamburguesa): abre/cierra .navbar-links con la clase
+     .is-open, actualiza aria-expanded y el ícono, cierra con Escape, al
+     elegir un enlace o al volver a escritorio.
+   - Sombra al hacer scroll: agrega .is-scrolled a .navbar.
+   Expone window.initNavbar() para ser llamado desde main.js
    ========================================================================== */
 
+function initNavbar() {
+  const navbar = document.querySelector('[data-navbar]');
+  if (!navbar) return;
 
-/* --------------------------------------------------------------------------
-   1200px — LAPTOP / ESCRITORIO PEQUEÑO
-   -------------------------------------------------------------------------- */
+  const toggle = navbar.querySelector('[data-navbar-toggle]');
+  const links = navbar.querySelector('[data-navbar-links]');
+  const icon = toggle ? toggle.querySelector('i') : null;
+  const DESKTOP_MQ = window.matchMedia('(min-width: 993px)');
 
-@media (max-width: 1200px) {
-  :root {
-    --container-max: 1040px;
+  /* ------------------------------------------------------------------------
+     Menú móvil
+     ------------------------------------------------------------------------ */
+  const setOpen = (open) => {
+    if (!toggle || !links) return;
+    if (open) {
+      /* El alto del encabezado varía con el logo: el panel arranca justo debajo */
+      links.style.top = `${Math.round(navbar.getBoundingClientRect().bottom)}px`;
+    }
+    links.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Cerrar menu' : 'Abrir menu');
+    if (icon) {
+      icon.classList.toggle('ti-menu-2', !open);
+      icon.classList.toggle('ti-x', open);
+    }
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+
+  if (toggle && links) {
+    toggle.addEventListener('click', () => {
+      setOpen(!links.classList.contains('is-open'));
+    });
+
+    links.addEventListener('click', (event) => {
+      if (event.target.closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && links.classList.contains('is-open')) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    const onViewportChange = (mq) => {
+      if (mq.matches) setOpen(false);
+    };
+    if (DESKTOP_MQ.addEventListener) {
+      DESKTOP_MQ.addEventListener('change', onViewportChange);
+    } else if (DESKTOP_MQ.addListener) {
+      DESKTOP_MQ.addListener(onViewportChange);
+    }
   }
+
+  /* ------------------------------------------------------------------------
+     Sombra al hacer scroll
+     ------------------------------------------------------------------------ */
+  const SCROLLED_AFTER_PX = 10;
+  let ticking = false;
+
+  const updateScrolled = () => {
+    navbar.classList.toggle('is-scrolled', window.scrollY > SCROLLED_AFTER_PX);
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateScrolled);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateScrolled();
 }
 
-
-/* --------------------------------------------------------------------------
-   992px — TABLET HORIZONTAL
-   -------------------------------------------------------------------------- */
-
-@media (max-width: 992px) {
-  :root {
-    --container-max: 100%;
-    --container-padding: var(--space-lg);
-  }
-
-  .section {
-    padding-block: var(--space-3xl);
-  }
-
-  .section-sm {
-    padding-block: var(--space-xl);
-  }
-
-  .section-header {
-    margin-bottom: var(--space-xl);
-  }
-}
-
-
-/* --------------------------------------------------------------------------
-   768px — TABLET VERTICAL
-   -------------------------------------------------------------------------- */
-
-@media (max-width: 768px) {
-  :root {
-    --header-height: 64px;
-    --container-padding: var(--space-md);
-  }
-
-  .section {
-    padding-block: var(--space-2xl);
-  }
-
-  .section-sm {
-    padding-block: var(--space-lg);
-  }
-
-  .btn-lg {
-    padding: var(--space-sm) var(--space-xl);
-    font-size: var(--fs-base);
-  }
-
-  .card {
-    padding: var(--space-lg);
-  }
-
-  .hero-actions,
-  .cta-banner .flex {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .hero-actions .btn,
-  .cta-banner .btn {
-    width: 100%;
-  }
-}
-
-
-/* --------------------------------------------------------------------------
-   576px — MÓVIL GRANDE
-   -------------------------------------------------------------------------- */
-
-@media (max-width: 576px) {
-  :root {
-    --container-padding: var(--space-sm);
-  }
-
-  .section {
-    padding-block: var(--space-xl);
-  }
-
-  .section-header {
-    margin-bottom: var(--space-lg);
-  }
-
-  .section-eyebrow {
-    font-size: var(--fs-xs);
-  }
-
-  .btn {
-    width: 100%;
-  }
-
-  .btn-inline {
-    width: auto;
-  }
-
-  .pricing-card--featured {
-    transform: none;
-  }
-}
-
-
-/* --------------------------------------------------------------------------
-   375px — MÓVIL PEQUEÑO (ajustes mínimos, solo lo esencial)
-   -------------------------------------------------------------------------- */
-
-@media (max-width: 375px) {
-  h1 { font-size: var(--fs-3xl); }
-  h2 { font-size: var(--fs-2xl); }
-
-  .navbar-brand-name {
-    font-size: var(--fs-base);
-  }
-
-  .whatsapp-float,
-  .scroll-top-btn {
-    width: 48px;
-    height: 48px;
-  }
-}
-
-
-/* --------------------------------------------------------------------------
-   ORIENTACIÓN — ajuste para tablets en horizontal con poca altura
-   -------------------------------------------------------------------------- */
-
-@media (max-height: 500px) and (orientation: landscape) {
-  .hero {
-    padding-block: var(--space-xl);
-  }
-
-  .navbar-links {
-    padding-block: var(--space-lg);
-  }
-}
-
-
-/* --------------------------------------------------------------------------
-   PANTALLAS GRANDES — límite superior para que el contenido no se estire
-   demasiado en monitores ultra-wide
-   -------------------------------------------------------------------------- */
-
-@media (min-width: 1600px) {
-  :root {
-    --container-max: 1320px;
-  }
-}
-
-
-/* --------------------------------------------------------------------------
-   IMPRESIÓN — oculta elementos no relevantes al imprimir (ej. contacto/FAQ)
-   -------------------------------------------------------------------------- */
-
-@media print {
-  .navbar,
-  .whatsapp-float,
-  .scroll-top-btn,
-  .hero-floating-badge,
-  .footer-social,
-  .btn {
-    display: none !important;
-  }
-
-  body {
-    color: #000;
-    background: #fff;
-  }
-
-  a {
-    text-decoration: underline;
-  }
-}
+window.initNavbar = initNavbar;

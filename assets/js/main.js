@@ -87,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener("DOMContentLoaded", () => {
   const navbar = document.querySelector('.navbar');
   const navbarInner = document.querySelector('.navbar-inner');
-  const navbarLogo = document.querySelector('.navbar-logo');
 
   if (navbar) {
     navbar.style.setProperty('padding-block', '20px', 'important');
@@ -96,9 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     navbarInner.style.setProperty('display', 'flex', 'important');
     navbarInner.style.setProperty('align-items', 'center', 'important');
   }
-  if (navbarLogo) {
-    navbarLogo.style.setProperty('height', 'auto', 'important');
-    navbarLogo.style.setProperty('max-height', 'none', 'important');
-    navbarLogo.style.setProperty('width', 'auto', 'important');
-  }
+  /* El tamaño del logo lo controla layout.css (.navbar-logo, max-height 80px).
+     Antes se forzaba aquí max-height: none, lo que dejaba el logo a 237px de
+     alto y sacaba de la pantalla el botón de menú en celulares y tablets. */
 });
