@@ -14,9 +14,9 @@ function initWhatsappFloat() {
   /* ------------------------------------------------------------------------
      Configuración — se lee de data-attributes en el HTML para que sea
      fácil de editar sin tocar JS:
-     <a data-whatsapp-float data-phone="5215512345678" data-message="Hola...">
+     <a data-whatsapp-float data-phone="525529728886" data-message="Hola...">
      ------------------------------------------------------------------------ */
-  const phone = button.getAttribute('data-phone') || '5215500000000';
+  const phone = button.getAttribute('data-phone') || '525529728886';
   const defaultMessage =
     button.getAttribute('data-message') ||
     'Hola, me gustaria recibir informacion sobre los cursos de ingles.';
