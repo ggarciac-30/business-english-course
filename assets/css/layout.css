@@ -182,9 +182,19 @@
   position: relative;
 }
 
-.hero-media img {
+.hero-media img,
+.hero-media video {
   border-radius: var(--radius-lg);
   width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-video {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background-color: var(--color-primary-dark);
+  pointer-events: none; /* sin controles ni menú: se comporta como un GIF */
 }
 
 .hero-floating-badge {

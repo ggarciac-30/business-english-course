@@ -43,6 +43,27 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------------
+     Video del hero (tipo GIF): sin audio y en bucle. Si el visitante pidió
+     reducir animaciones en su sistema, se detiene y queda la imagen fija.
+     ------------------------------------------------------------------------ */
+  const heroVideo = document.querySelector('.hero-video');
+  if (heroVideo) {
+    heroVideo.muted = true;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const applyMotionPreference = () => {
+      if (reduceMotion.matches) {
+        heroVideo.pause();
+        heroVideo.removeAttribute('autoplay');
+      } else {
+        const playAttempt = heroVideo.play();
+        if (playAttempt && typeof playAttempt.catch === 'function') playAttempt.catch(() => {});
+      }
+    };
+    applyMotionPreference();
+    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', applyMotionPreference);
+  }
+
+  /* ------------------------------------------------------------------------
      Año dinámico en el footer (©️ 2026 se actualiza solo cada año)
      Requiere <span data-current-year></span> en el footer
      ------------------------------------------------------------------------ */

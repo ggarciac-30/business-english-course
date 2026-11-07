@@ -113,7 +113,12 @@
         </div>
 
         <div class="hero-media reveal-right">
-          <img src="assets/images/hero/hero-placeholder.jpg" alt="Estudiantes aprendiendo inglés en clase online" width="600" height="450">
+          <!-- Video en bucle, sin audio (tipo GIF). Antes: hero-placeholder.jpg (se conserva para og:image) -->
+          <video class="hero-video" autoplay muted loop playsinline preload="auto" disablepictureinpicture
+                 poster="assets/images/hero/hero-poster.jpg" width="960" height="540"
+                 role="img" aria-label="Clase de inglés en grupo: un profesor guía a cinco alumnos frente a un pizarrón">
+            <source src="assets/video/hero.mp4" type="video/mp4">
+          </video>
 
           <!-- OCULTO nov-2026: métricas sin dato verificado (Excel F39, T35). Para mostrar, quitar la clase "hidden". -->
           <div class="hero-floating-badge hero-floating-badge--top hidden">
