@@ -28,7 +28,7 @@ function initNavbar() {
     }
     links.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Cerrar menu' : 'Abrir menu');
+    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
     if (icon) {
       icon.classList.toggle('ti-menu-2', !open);
       icon.classList.toggle('ti-x', open);

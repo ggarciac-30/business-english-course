@@ -19,7 +19,7 @@ function initWhatsappFloat() {
   const phone = button.getAttribute('data-phone') || '525529728886';
   const defaultMessage =
     button.getAttribute('data-message') ||
-    'Hola, me gustaria recibir informacion sobre los cursos de ingles.';
+    'Hola, me gustaría recibir información sobre los cursos de inglés.';
 
   const encodedMessage = encodeURIComponent(defaultMessage);
   button.setAttribute(
