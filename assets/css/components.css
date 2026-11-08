@@ -591,6 +591,25 @@ textarea.form-control {
   display: block;
 }
 
+.form-failure {
+  background-color: rgba(220, 53, 69, 0.08);
+  color: var(--color-error);
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  display: none;
+}
+
+.form-failure a {
+  color: inherit;
+  font-weight: var(--fw-semibold);
+  text-decoration: underline;
+}
+
+.form-failure.is-visible {
+  display: block;
+}
+
 
 /* --------------------------------------------------------------------------
    WHATSAPP FLOTANTE

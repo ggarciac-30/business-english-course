@@ -15,6 +15,7 @@ function initFormValidation() {
 
   const submitButton = form.querySelector('[data-form-submit]');
   const successBox = form.querySelector('[data-form-success]');
+  const failureBox = form.querySelector('[data-form-failure]');
 
   /* ------------------------------------------------------------------------
      Reglas de validación por campo
@@ -115,14 +116,14 @@ function initFormValidation() {
         if (!response.ok) throw new Error('Respuesta no valida del servidor');
       }
 
+      if (failureBox) failureBox.classList.remove('is-visible');
       showSuccess();
       form.reset();
     } catch (error) {
-      /* Si falla el envio remoto, igual mostramos exito para no bloquear
-         al usuario, pero registramos el error para revisión posterior */
+      /* Si falla el envío, se avisa y se conservan los datos capturados para
+         reintentar; también se ofrece WhatsApp para no perder al prospecto */
       console.error('Error al enviar el formulario:', error);
-      showSuccess();
-      form.reset();
+      showFailure();
     } finally {
       setLoadingState(false);
     }
@@ -139,6 +140,14 @@ function initFormValidation() {
     } else if (submitButton.dataset.originalText) {
       submitButton.innerHTML = submitButton.dataset.originalText;
     }
+  }
+
+  function showFailure() {
+    if (!failureBox) return;
+    if (successBox) successBox.classList.remove('is-visible');
+    failureBox.classList.add('is-visible');
+    failureBox.setAttribute('role', 'alert');
+    failureBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   function showSuccess() {
