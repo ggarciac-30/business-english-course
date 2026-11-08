@@ -190,11 +190,17 @@
   display: block;
 }
 
-.hero-video {
+.hero-video,
+.hero-video-fallback {
   aspect-ratio: 16 / 9;
   object-fit: cover;
   background-color: var(--color-primary-dark);
   pointer-events: none; /* sin controles ni menú: se comporta como un GIF */
+}
+
+.hero-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
 }
 
 .hero-floating-badge {

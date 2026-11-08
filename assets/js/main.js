@@ -43,24 +43,46 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------------
-     Video del hero (tipo GIF): sin audio y en bucle. Si el visitante pidió
-     reducir animaciones en su sistema, se detiene y queda la imagen fija.
+     Video del hero (tipo GIF): sin audio, en bucle y siempre en movimiento.
+     Algunos navegadores bloquean la reproducción automática aunque el video
+     no tenga audio (p. ej. iPhone en modo de bajo consumo o con ahorro de
+     datos). Si el video no arranca, se reemplaza por una animación WebP,
+     que los navegadores reproducen siempre, como un GIF.
      ------------------------------------------------------------------------ */
   const heroVideo = document.querySelector('.hero-video');
   if (heroVideo) {
-    heroVideo.muted = true;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const applyMotionPreference = () => {
-      if (reduceMotion.matches) {
-        heroVideo.pause();
-        heroVideo.removeAttribute('autoplay');
-      } else {
-        const playAttempt = heroVideo.play();
-        if (playAttempt && typeof playAttempt.catch === 'function') playAttempt.catch(() => {});
-      }
+    let swapped = false;
+    const useAnimatedImage = () => {
+      if (swapped || !heroVideo.isConnected) return;
+      swapped = true;
+      const img = document.createElement('img');
+      img.src = heroVideo.getAttribute('data-fallback');
+      img.alt = heroVideo.getAttribute('aria-label') || '';
+      img.width = 960;
+      img.height = 540;
+      img.className = 'hero-video-fallback';
+      img.decoding = 'async';
+      heroVideo.replaceWith(img);
     };
-    applyMotionPreference();
-    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', applyMotionPreference);
+
+    heroVideo.muted = true;
+    heroVideo.defaultMuted = true;
+    heroVideo.setAttribute('muted', '');
+    heroVideo.setAttribute('playsinline', '');
+
+    const tryPlay = () => {
+      const attempt = heroVideo.play();
+      if (attempt && typeof attempt.catch === 'function') attempt.catch(useAnimatedImage);
+    };
+    tryPlay();
+
+    /* Si tras unos segundos sigue en pausa (bloqueo silencioso), usar la animación */
+    window.setTimeout(() => {
+      if (heroVideo.paused) useAnimatedImage();
+    }, 2500);
+
+    heroVideo.addEventListener('error', useAnimatedImage, true);
+    heroVideo.querySelectorAll('source').forEach((src) => src.addEventListener('error', useAnimatedImage));
   }
 
   /* ------------------------------------------------------------------------
