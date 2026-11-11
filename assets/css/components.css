@@ -301,6 +301,97 @@
   color: var(--color-primary);
 }
 
+/* Variantes de contenido de la tarjeta del director */
+.director-subtitle {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-xs);
+}
+
+.director-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-md);
+  border-left: 2px solid rgba(12, 100, 163, 0.25);
+}
+
+.director-timeline li {
+  position: relative;
+  padding: 0 0 var(--space-sm) var(--space-md);
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+}
+
+.director-timeline li::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-secondary);
+  border: 2px solid var(--color-white);
+}
+
+.director-timeline strong {
+  color: var(--color-primary-dark);
+}
+
+.director-timeline span {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--color-text-secondary);
+}
+
+.director-places {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-md);
+}
+
+.director-places li {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+}
+
+.director-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-md);
+}
+
+.director-stats div {
+  background-color: var(--color-bg-alt);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  text-align: center;
+}
+
+.director-stats strong {
+  display: block;
+  font-family: var(--font-heading, inherit);
+  font-size: 1.35rem;
+  color: var(--color-primary);
+  line-height: 1.1;
+}
+
+.director-stats span {
+  font-size: var(--fs-xs);
+  color: var(--color-text-secondary);
+}
+
 @media (max-width: 640px) {
   .director-card {
     grid-template-columns: 1fr;
@@ -308,8 +399,15 @@
     text-align: center;
     gap: var(--space-md);
   }
-  .director-credentials {
+  .director-credentials,
+  .director-places {
     justify-content: center;
+  }
+  .director-timeline {
+    text-align: left;
+  }
+  .director-stats {
+    grid-template-columns: 1fr;
   }
 }
 
